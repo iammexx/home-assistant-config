@@ -134,6 +134,7 @@ class DarkSkyWeatherCard extends LitElement {
   get windDirections() {
     const windDirections_en = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','N'];
     const windDirections_fr = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO','N'];
+    const windDirections_da = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV','N'];
     const windDirections_de = ['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSW','SW','WSW','W','WNW','NW','NNW','N'];
     const windDirections_nl = ['N','NNO','NO','ONO','O','OZO','ZO','ZZO','Z','ZZW','ZW','WZW','W','WNW','NW','NNW','N'];
     const windDirections_he = ['צפון','צ-צ-מז','צפון מזרח','מז-צ-מז','מזרח','מז-ד-מז','דרום מזרח','ד-ד-מז','דרום','ד-ד-מע','דרום מערב','מע-ד-מע','מערב','מע-צ-מע','צפון מערב','צ-צ-מע','צפון'];
@@ -142,6 +143,8 @@ class DarkSkyWeatherCard extends LitElement {
       case "it" :
       case "fr" :
         return windDirections_fr;
+      case "da" :
+        return windDirections_da;
       case "de" :
         return windDirections_de;
       case "nl" :
@@ -168,6 +171,11 @@ class DarkSkyWeatherCard extends LitElement {
         return {
           feelsLike: "Se sent comme",
           maxToday: "Max aujourd'hui:",
+        }
+      case "da" :
+        return {
+          feelsLike: "Højeste i dag",
+          maxToday: "Føles som",
         }
       case "de" :
         return {
