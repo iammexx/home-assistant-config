@@ -8,6 +8,23 @@ var html = LitElement.prototype.html;
 // ##### Custom Card Definition begins
 // #####
 
+// Conditions defined in Wheater DarkSky
+const MAP_CONDITION = {
+    'clear-day': 'sunny',
+    'clear-night': 'clear-night',
+    'rain': 'rainy',
+    'snow': 'snowy',
+    'sleet': 'snowy-rainy',
+    'wind': 'windy',
+    'fog': 'fog',
+    'cloudy': 'cloudy',
+    'partly-cloudy-day': 'partlycloudy',
+    'partly-cloudy-night': 'partlycloudy',
+    'hail': 'hail',
+    'thunderstorm': 'lightning',
+    'tornado': '',
+};
+
 class DarkSkyWeatherCard extends LitElement {
 
 // #####
@@ -17,7 +34,11 @@ class DarkSkyWeatherCard extends LitElement {
   render() {
 //  Handle Configuration Flags 
 //    var icons = this.config.static_icons ? "static" : "animated";
-    var currentText = this.config.entity_current_text ? html`<span class="currentText" id="current-text">${this._hass.states[this.config.entity_current_text].state}</span>` : ``;
+	  
+    //Defining a default currentText based on current_conditions
+    var defaultCurrentText = this.translation('state.weather.' + MAP_CONDITION[this._hass.states[this.config.entity_current_conditions].state], this._hass.states[this.config.entity_current_conditions].state);
+    var currentText = this.config.entity_current_text ? html`<span class="currentText" id="current-text">${this._hass.states[this.config.entity_current_text].state}</span>` : html`<span class="currentText" id="current-text">${defaultCurrentText}</span>`;
+	  
     var apparentTemp = this.config.entity_apparent_temp ? html`<span class="apparent">${this.localeText.feelsLike} <span id="apparent-text">${this.current.apparent}</span> ${this.getUOM("temperature")}</span>` : ``;
     var summary = this.config.entity_daily_summary ? html`<br><span class="unit" id="daily-summary-text">${this._hass.states[this.config.entity_daily_summary].state}</span></br>` : ``;
     var separator = this.config.show_separator ? html`<hr class=line>` : ``;
@@ -67,6 +88,14 @@ class DarkSkyWeatherCard extends LitElement {
       </ha-card>
     `;
   }
+
+//Traslate in defined language in flags or in the hass language	
+translation(string, fallback = 'unknown') {
+    //const lang = this.hass.selectedLanguage || this.hass.language;
+    const lang = this.config.locale || this._hass.selectedLanguage || this._hass.language;
+    const resources = this._hass.resources[lang];
+    return (resources && resources[string] ? resources[string] : fallback);
+}	
 
 
 // #####
