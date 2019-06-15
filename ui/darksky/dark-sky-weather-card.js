@@ -171,7 +171,7 @@ class DarkSkyWeatherCard extends LitElement {
         }
       case "fr" :
         return {
-          feelsLike: "Se sent comme",
+          feelsLike: "Température ressentie:",
           maxToday: "Max aujourd'hui:",
         }
       case "de" :
