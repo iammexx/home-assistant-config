@@ -3,7 +3,7 @@
       "updated_at": "2019-06-16",
       "version": "0.10.2",
       "remote_location": "https://raw.githubusercontent.com/iammexx/lovelace-darksky-card/lovelace-darksky-card.js",
-      "visit_repo": "https://github.com/iammexx/lovelace-darksky-card/tree/master/ui/darksky",
-      "changelog": "https://github.com/iammexx/lovelace-darksky-card/blob/master/ui/darksky/changelog.md"
+      "visit_repo": "https://github.com/iammexx/lovelace-darksky-card/tree/master/",
+      "changelog": "https://github.com/iammexx/lovelace-darksky-card/blob/master/changelog.md"
     }
 }
