@@ -140,6 +140,7 @@ class DarkSkyWeatherCard extends LitElement {
     const windDirections_nl = ['N','NNO','NO','ONO','O','OZO','ZO','ZZO','Z','ZZW','ZW','WZW','W','WNW','NW','NNW','N'];
     const windDirections_he = ['צפון','צ-צ-מז','צפון מזרח','מז-צ-מז','מזרח','מז-ד-מז','דרום מזרח','ד-ד-מז','דרום','ד-ד-מע','דרום מערב','מע-ד-מע','מערב','מע-צ-מע','צפון מערב','צ-צ-מע','צפון'];
     const windDirections_da = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV','N'];
+	const windDirections_ru = ['С','ССВ','СВ','ВСВ','В','ВЮВ','ЮВ','ЮЮВ','Ю','ЮЮЗ','ЮЗ','ЗЮЗ','З','ЗСЗ','СЗ','ССЗ','С'];
     
     switch (this.config.locale) {
       case "it" :
@@ -153,6 +154,8 @@ class DarkSkyWeatherCard extends LitElement {
         return windDirections_he;
       case "da" :
         return windDirections_da;
+	  case "ru" :
+        return windDirections_ru;
       default :
         return windDirections_en;
     }
@@ -199,6 +202,11 @@ class DarkSkyWeatherCard extends LitElement {
           feelsLike: "Føles som",
           maxToday: "Højeste i dag"
         }
+	  case "ru" :
+		return {
+		  feelsLike: "Ощущается как:",
+		  maxToday: "Макс. сегодня"
+		}
       default :
         return {
           feelsLike: "Feels like",
