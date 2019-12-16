@@ -199,6 +199,16 @@ class DarkSkyWeatherCard extends LitElement {
           feelsLike: "Føles som",
           maxToday: "Højeste i dag"
         }
+      case "ru" :
+        return {
+          feelsLike: "Ощущается как",
+          maxToday: "Максимально сегодня"
+        }
+      case "ua" :
+        return {
+          feelsLike: "Відчувається як",
+          maxToday: "Максимально сьогодні"
+        }
       default :
         return {
           feelsLike: "Feels like",
