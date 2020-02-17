@@ -60,6 +60,7 @@ class DarkSkyWeatherCard extends LitElement {
                                                         <br><span class="lowTemp" id="fcast-low-${daily.dayIndex}">${Math.round(this._hass.states[daily.templow].state)}${this.getUOM("temperature")}</span>` : 
                                                    html`<br><span class="lowTemp" id="fcast-low-${daily.dayIndex}">${Math.round(this._hass.states[daily.templow].state)}</span> / <span class="highTemp" id="fcast-high-${daily.dayIndex}">${Math.round(this._hass.states[daily.temphigh].state)}${this.getUOM("temperature")}</span>`}
                   ${this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5 ? html`<br><span class="pop" id="fcast-pop-${daily.dayIndex}">${Math.round(this._hass.states[daily.pop].state)} %</span>` : ``}
+                  ${this.config.include_accumulation && this._hass.states[daily.acc].state != 'unknown' ? html` / <span class="acc" id="fcast-acc-${daily.dayIndex}">${this._hass.states[daily.acc].state} cm</span>` : ``}
                   <div class="fcasttooltiptext" id="fcast-summary-${daily.dayIndex}">${ this.config.tooltips ? this._hass.states[daily.summary].state : ""}</div>
                 </div>`)}
               </div>
@@ -265,6 +266,7 @@ class DarkSkyWeatherCard extends LitElement {
   										temphigh: this.config.entity_forecast_high_temp_1,
   										templow:  this.config.entity_forecast_low_temp_1,
   										pop: this.config.entity_pop_1,
+  										acc: this.config.entity_acc_1,
   										summary: this.config.entity_summary_1, };
     const forecast2 = { date: forecastDate2,
                       dayIndex: '2',
@@ -272,6 +274,7 @@ class DarkSkyWeatherCard extends LitElement {
   										temphigh: this.config.entity_forecast_high_temp_2,
   										templow:  this.config.entity_forecast_low_temp_2,
   										pop: this.config.entity_pop_2,
+  										acc: this.config.entity_acc_2,
   										summary: this.config.entity_summary_2,  };
     const forecast3 = { date: forecastDate3,
                       dayIndex: '3',
@@ -279,6 +282,7 @@ class DarkSkyWeatherCard extends LitElement {
   										temphigh: this.config.entity_forecast_high_temp_3,
   										templow:  this.config.entity_forecast_low_temp_3,
   										pop: this.config.entity_pop_3,
+  										acc: this.config.entity_acc_3,
   										summary: this.config.entity_summary_3, };
     const forecast4 = { date: forecastDate4,
                       dayIndex: '4',
@@ -286,6 +290,7 @@ class DarkSkyWeatherCard extends LitElement {
   										temphigh: this.config.entity_forecast_high_temp_4,
   										templow:  this.config.entity_forecast_low_temp_4,
   										pop: this.config.entity_pop_4,
+  										acc: this.config.entity_acc_4,
   										summary: this.config.entity_summary_4, };
     const forecast5 = { date: forecastDate5,
                       dayIndex: '5',
@@ -293,6 +298,7 @@ class DarkSkyWeatherCard extends LitElement {
   										temphigh: this.config.entity_forecast_high_temp_5,
   										templow:  this.config.entity_forecast_low_temp_5,
   										pop: this.config.entity_pop_5,
+  										acc: this.config.entity_acc_5,
   										summary: this.config.entity_summary_5, };
 
 	  return [forecast1, forecast2, forecast3, forecast4, forecast5];
@@ -452,7 +458,8 @@ style() {
   var largeIconLeftPos = this.config.large_icon_left_pos || "0em";
   var currentDataTopMargin = this.config.current_data_top_margin ? this.config.current_data_top_margin : this.config.show_separator ? "1em" : "7em";
   var separatorTopMargin = this.config.separator_top_margin || "6em";
-  
+  var includeAccumulation = this.config.include_accumulation || false;
+
   return html`
         .clear {
         clear: both;
@@ -519,7 +526,10 @@ style() {
         font-weight: 400;
         color: var(--primary-text-color);
       }
-
+      .acc {
+        font-weight: 400;
+        color: var(--primary-text-color);
+      }
       .variations {
         display: flex;
         flex-flow: row wrap;
@@ -720,6 +730,7 @@ style() {
         root.getElementById("fcast-high-" + daily.dayIndex).textContent = `${Math.round(this._hass.states[daily.temphigh].state)}${this.getUOM("temperature")}`;
         root.getElementById("fcast-low-" + daily.dayIndex).textContent = `${Math.round(this._hass.states[daily.templow].state)}${this.config.old_daily_format ? this.getUOM("temperature") : ""}`;
         if (this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5) { root.getElementById("fcast-pop-" + daily.dayIndex).textContent = `${Math.round(this._hass.states[daily.pop].state)} %` }
+        if (this.config.include_accumulation) { root.getElementById("fcast-acc-" + daily.dayIndex).textContent = `${this._hass.states[daily.acc].state} cm` }
         root.getElementById("fcast-summary-" + daily.dayIndex).textContent = `${this._hass.states[daily.summary].state}`;
      });
       
