@@ -1,14 +1,21 @@
+// #### Add card info to console
+console.info(
+  `%c DARK-SKY-WEATHER-CARD  \n%c  Version 7.2 animated    `,
+  "color: orange; font-weight: bold; background: black",
+  "color: white; font-weight: bold; background: dimgray",
+ );
+
 // #####
 // ##### Get the LitElement and HTML classes from an already defined HA Lovelace class
 // #####
-var LitElement = LitElement || Object.getPrototypeOf(customElements.get("home-assistant-main"));
-var html = LitElement.prototype.html;
+var Lit = Lit || Object.getPrototypeOf(customElements.get("ha-panel-lovelace") || customElements.get('hui-view'));
+var html = Lit.prototype.html;
 
 // #####
 // ##### Custom Card Definition begins
 // #####
 
-class DarkSkyWeatherCard extends LitElement {
+class DarkSkyWeatherCard extends Lit {
 
 // #####
 // ##### Define Render Template
@@ -676,28 +683,10 @@ style() {
 // #####
 
   set hass(hass) {
-    
-    var interval = this.config.refresh_interval || 30;
-    var doRefresh = false;
-    
-    // Make sure hass is assigned first time.
-    if (!this._initialized) {
-      this._initialized= true;
-      this._lasRefresh = new Date();
-      doRefresh = true;
-    }
-    
-    var now = new Date();
-    
-    // Check if refresh interval has been exceeded and refresh if necessary
-    if (Math.round((now - this._lastRefresh)/1000) > interval ) { doRefresh = true; } 
-
-    if (doRefresh) {
-      this._lastRefresh = new Date();
-      this._hass = hass;
-      this.updateValues();
-    }
+    this._hass = hass;
+    if (this.shadowRoot) { this.updateValues(); }
   }
+
 
   
 // #####
